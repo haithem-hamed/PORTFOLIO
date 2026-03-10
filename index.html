@@ -22,6 +22,41 @@
             --gray: #6c757d;
             --transition: all 0.4s ease;
         }
+
+        /* Language Toggle Styles */
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2px;
+            margin-left: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: white;
+            padding: 5px 12px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 18px;
+            transition: var(--transition);
+            opacity: 0.7;
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            color: var(--primary);
+            opacity: 1;
+        }
+
+        .lang-btn:hover:not(.active) {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.1);
+        }
         
         body {
             background-color: #f5f7fb;
@@ -833,14 +868,18 @@
             </div>
             <nav>
                 <ul id="navMenu">
-                    <li><a href="#home">Accueil</a></li>
-                    <li><a href="#profile">Profil</a></li>
-                    <li><a href="#experience">Expérience</a></li>
-                    <li><a href="#skills">Compétences</a></li>
-                    <li><a href="#education">Formations</a></li>
-                    <li><a href="#languages">Langues</a></li>
+                    <li><a href="#home" data-i18n="nav_home">Accueil</a></li>
+                    <li><a href="#profile" data-i18n="nav_profile">Profil</a></li>
+                    <li><a href="#experience" data-i18n="nav_experience">Expérience</a></li>
+                    <li><a href="#skills" data-i18n="nav_skills">Compétences</a></li>
+                    <li><a href="#education" data-i18n="nav_education">Formations</a></li>
+                    <li><a href="#languages" data-i18n="nav_languages">Langues</a></li>
                 </ul>
             </nav>
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="setLanguage('fr')" id="lang-fr">FR</button>
+                <button class="lang-btn" onclick="setLanguage('en')" id="lang-en">EN</button>
+            </div>
         </div>
     </header>
 
@@ -848,10 +887,10 @@
     <section class="hero" id="home">
         <div class="container hero-content">
             <h1>Haithem Hamed</h1>
-            <h2>Consultant Système – Expert Stockage et Virtualisation</h2>
+            <h2 data-i18n="hero_title">Consultant Système – Expert Stockage et Virtualisation</h2>
             
             <div class="experience-badge">
-                <i class="fas fa-briefcase"></i> 9+ ans d'expérience
+                <i class="fas fa-briefcase"></i> <span data-i18n="hero_experience">9+ ans d'expérience</span>
             </div>
             
             <div class="contact-info-hero">
@@ -870,17 +909,18 @@
                 </div>
             </div>
             
-            <p>Ingénieur Systèmes confirmé, expert VMware, Veeam et infrastructures de stockage. Plus de <span class="highlight">9 ans d'expérience</span> dans les environnements Linux/Windows, Active Directory, Hyper-V et Proxmox, avec un fort focus sur la sécurité, la résilience et l'optimisation des performances.</p>
+            <p data-i18n="hero_description">Ingénieur Systèmes confirmé, expert VMware, Veeam et infrastructures de stockage. Plus de <span class="highlight">9 ans d'expérience</span> dans les environnements Linux/Windows, Active Directory, Hyper-V et Proxmox, avec un fort focus sur la sécurité, la résilience et l'optimisation des performances.</p>
             
             <div class="hero-buttons">
                 <a href="#experience" class="cta-button">
-                    <i class="fas fa-arrow-down"></i> Découvrir mon parcours
+                    <i class="fas fa-arrow-down"></i> <span data-i18n="hero_cta_discover">Découvrir mon parcours</span>
                 </a>
-                <a href="https://raw.githubusercontent.com/haithem-hamed/PORTFOLIO/60caa78268068725f669df1b6891732ea2090640/CV_Haithem_HAMED.pdf" 
+                <a href="CV_Haithem_HAMED_FR.pdf" 
                    class="cta-button download-button" 
+                   id="download-cv"
                    target="_blank" 
-                   download="CV_Haithem_Hamed.pdf">
-                    <i class="fas fa-download"></i> Télécharger mon CV (PDF)
+                   download="CV_Haithem_HAMED_FR.pdf">
+                    <i class="fas fa-download"></i> <span data-i18n="hero_cta_download">Télécharger mon CV (PDF)</span>
                 </a>
             </div>
         </div>
@@ -890,13 +930,13 @@
     <section id="profile">
         <div class="container">
             <div class="section-title">
-                <h2>Profil Professionnel</h2>
+                <h2 data-i18n="profile_title">Profil Professionnel</h2>
             </div>
             <div class="profile-section">
-                <h3>Expertise & Valeur Ajoutée</h3>
-                <p>Ingénieur Systèmes avec <span class="highlight">plus de 9 ans d'expérience</span> spécialisé dans la virtualisation, le stockage et la sécurité des infrastructures IT. Expertise approfondie dans la conception, le déploiement et l'administration d'environnements virtualisés complexes (VMware, Proxmox, Hyper-V).</p>
-                <p>Spécialiste des solutions de sauvegarde et reprise d'activité (VEEAM), avec une forte orientation vers l'automatisation (Ansible, PowerShell, Bash) et l'industrialisation des processus. Passionné par l'optimisation des performances, la haute disponibilité et la migration vers le cloud (OVH, Azure).</p>
-                <p>Capacité avérée à gérer des projets techniques complexes, à former des équipes et à assurer le support niveau 3. Excellentes compétences en communication et en gestion de projets IT.</p>
+                <h3 data-i18n="profile_subtitle">Expertise & Valeur Ajoutée</h3>
+                <p data-i18n="profile_p1">Ingénieur Systèmes avec <span class="highlight">plus de 9 ans d'expérience</span> spécialisé dans la virtualisation, le stockage et la sécurité des infrastructures IT. Expertise approfondie dans la conception, le déploiement et l'administration d'environnements virtualisés complexes (VMware, Proxmox, Hyper-V).</p>
+                <p data-i18n="profile_p2">Spécialiste des solutions de sauvegarde et reprise d'activité (VEEAM), avec une forte orientation vers l'automatisation (Ansible, PowerShell, Bash) et l'industrialisation des processus. Passionné par l'optimisation des performances, la haute disponibilité et la migration vers le cloud (OVH, Azure).</p>
+                <p data-i18n="profile_p3">Capacité avérée à gérer des projets techniques complexes, à former des équipes et à assurer le support niveau 3. Excellentes compétences en communication et en gestion de projets IT.</p>
             </div>
         </div>
     </section>
@@ -905,7 +945,7 @@
     <section id="experience">
         <div class="container">
             <div class="section-title">
-                <h2>Expérience Professionnelle (9+ ans)</h2>
+                <h2 data-i18n="experience_title">Expérience Professionnelle (9+ ans)</h2>
             </div>
             <div class="timeline">
                 <!-- Expérience 1 -->
@@ -1055,15 +1095,15 @@
     <section id="skills">
         <div class="container">
             <div class="section-title">
-                <h2>Compétences Techniques</h2>
+                <h2 data-i18n="skills_title">Compétences Techniques</h2>
             </div>
             
             <div class="skills-section">
                 <!-- Catégorie 1 -->
                 <div class="skills-category">
-                    <h3><i class="fas fa-server"></i> Systèmes d'exploitation & Virtualisation</h3>
+                    <h3><i class="fas fa-server"></i> <span data-i18n="skills_cat1">Systèmes d'exploitation & Virtualisation</span></h3>
                     <ul class="skills-list">
-                        <li><i class="fab fa-windows skill-icon-small"></i> Windows Server</li>
+                        <li><i class="fab fa-windows skill-icon-small"></i> <span data-i18n="skill_win">Windows Server</span></li>
                         <li><i class="fab fa-linux skill-icon-small"></i> Linux (Red Hat, CentOS, Ubuntu, Debian)</li>
                         <li><i class="fas fa-cloud skill-icon-small"></i> VMware vSphere</li>
                         <li><i class="fas fa-cube skill-icon-small"></i> Proxmox</li>
@@ -1075,7 +1115,7 @@
                 
                 <!-- Catégorie 2 -->
                 <div class="skills-category">
-                    <h3><i class="fas fa-database"></i> Stockage, Sauvegarde & Sécurité</h3>
+                    <h3><i class="fas fa-database"></i> <span data-i18n="skills_cat2">Stockage, Sauvegarde & Sécurité</span></h3>
                     <ul class="skills-list">
                         <li><i class="fas fa-save skill-icon-small"></i> VEEAM Backup</li>
                         <li><i class="fas fa-chart-pie skill-icon-small"></i> Veeam ONE</li>
@@ -1092,7 +1132,7 @@
                 
                 <!-- Catégorie 3 -->
                 <div class="skills-category">
-                    <h3><i class="fas fa-network-wired"></i> Réseaux & Infrastructure</h3>
+                    <h3><i class="fas fa-network-wired"></i> <span data-i18n="skills_cat3">Réseaux & Infrastructure</span></h3>
                     <ul class="skills-list">
                         <li><i class="fas fa-users skill-icon-small"></i> Active Directory</li>
                         <li><i class="fas fa-cogs skill-icon-small"></i> GPO</li>
@@ -1109,7 +1149,7 @@
                 
                 <!-- Catégorie 4 -->
                 <div class="skills-category">
-                    <h3><i class="fas fa-chart-line"></i> Supervision & Automatisation</h3>
+                    <h3><i class="fas fa-chart-line"></i> <span data-i18n="skills_cat4">Supervision & Automatisation</span></h3>
                     <ul class="skills-list">
                         <li><i class="fas fa-eye skill-icon-small"></i> Centreon</li>
                         <li><i class="fas fa-chart-bar skill-icon-small"></i> Zabbix</li>
@@ -1124,7 +1164,7 @@
                 
                 <!-- Catégorie 5 -->
                 <div class="skills-category">
-                    <h3><i class="fas fa-cloud"></i> Cloud & Bases de données</h3>
+                    <h3><i class="fas fa-cloud"></i> <span data-i18n="skills_cat5">Cloud & Bases de données</span></h3>
                     <ul class="skills-list">
                         <li><i class="fas fa-cloud-upload-alt skill-icon-small"></i> Cloud OVH</li>
                         <li><i class="fab fa-microsoft skill-icon-small"></i> Azure Cloud</li>
@@ -1137,7 +1177,7 @@
                 
                 <!-- Catégorie 6 -->
                 <div class="skills-category">
-                    <h3><i class="fas fa-tools"></i> Applications & Outils</h3>
+                    <h3><i class="fas fa-tools"></i> <span data-i18n="skills_cat6">Applications & Outils</span></h3>
                     <ul class="skills-list">
                         <li><i class="fab fa-nginx skill-icon-small"></i> Nginx</li>
                         <li><i class="fab fa-apache skill-icon-small"></i> Apache</li>
@@ -1158,7 +1198,7 @@
     <section id="education">
         <div class="container">
             <div class="section-title">
-                <h2>Formations & Certifications</h2>
+                <h2 data-i18n="edu_title">Formations & Certifications</h2>
             </div>
             <div class="education-container">
                 <div class="education-card">
@@ -1199,7 +1239,7 @@
     <section id="languages">
         <div class="container">
             <div class="section-title">
-                <h2>Langues</h2>
+                <h2 data-i18n="lang_title">Langues</h2>
             </div>
             <div class="languages-container">
                 <div class="language-item">
@@ -1226,8 +1266,8 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <h3>Intéressé par mon profil ?</h3>
-                <p>Consultant système expert en stockage et virtualisation avec <span class="highlight">9+ ans d'expérience</span>, je suis ouvert à de nouvelles opportunités stimulantes. N'hésitez pas à me contacter pour discuter de vos projets d'infrastructure.</p>
+                <h3 data-i18n="footer_title">Intéressé par mon profil ?</h3>
+                <p data-i18n="footer_description">Consultant système expert en stockage et virtualisation avec <span class="highlight">9+ ans d'expérience</span>, je suis ouvert à de nouvelles opportunités stimulantes. N'hésitez pas à me contacter pour discuter de vos projets d'infrastructure.</p>
                 <div class="contact-info">
                                         <div class="contact-item-hero">
                     <i class="fas fa-envelope"></i>
@@ -1244,22 +1284,132 @@
                     
                 </div>
                 <div style="margin-top: 30px;">
-                    <a href="https://raw.githubusercontent.com/haithem-hamed/PORTFOLIO/60caa78268068725f669df1b6891732ea2090640/CV_Haithem_HAMED.pdf" 
+                    <a href="CV_Haithem_HAMED_FR.pdf" 
                        class="cta-button download-button" 
+                       id="download-cv-footer"
                        target="_blank" 
-                       download="CV_Haithem_Hamed.pdf"
+                       download="CV_Haithem_HAMED_FR.pdf"
                        style="max-width: 300px; margin: 0 auto;">
-                        <i class="fas fa-download"></i> Télécharger mon CV (PDF)
+                        <i class="fas fa-download"></i> <span data-i18n="hero_cta_download">Télécharger mon CV (PDF)</span>
                     </a>
                 </div>
             </div>
             <div class="copyright">
-                &copy; 2026 Haithem Hamed - Consultant Système Expert. Tous droits réservés.
+                <span data-i18n="footer_copyright">&copy; 2026 Haithem Hamed - Consultant Système Expert. Tous droits réservés.</span>
             </div>
         </div>
     </footer>
 
     <script>
+        const translations = {
+            fr: {
+                nav_home: "Accueil",
+                nav_profile: "Profil",
+                nav_experience: "Expérience",
+                nav_skills: "Compétences",
+                nav_education: "Formations",
+                nav_languages: "Langues",
+                hero_title: "Consultant Système – Expert Stockage et Virtualisation",
+                hero_experience: "9+ ans d'expérience",
+                hero_description: "Ingénieur Systèmes confirmé, expert VMware, Veeam et infrastructures de stockage. Plus de <span class=\"highlight\">9 ans d'expérience</span> dans les environnements Linux/Windows, Active Directory, Hyper-V et Proxmox, avec un fort focus sur la sécurité, la résilience et l'optimisation des performances.",
+                hero_cta_discover: "Découvrir mon parcours",
+                hero_cta_download: "Télécharger mon CV (PDF)",
+                profile_title: "Profil Professionnel",
+                profile_subtitle: "Expertise & Valeur Ajoutée",
+                profile_p1: "Ingénieur Systèmes avec <span class=\"highlight\">plus de 9 ans d'expérience</span> spécialisé dans la virtualisation, le stockage et la sécurité des infrastructures IT. Expertise approfondie dans la conception, le déploiement et l'administration d'environnements virtualisés complexes (VMware, Proxmox, Hyper-V).",
+                profile_p2: "Spécialiste des solutions de sauvegarde et reprise d'activité (VEEAM), avec une forte orientation vers l'automatisation (Ansible, PowerShell, Bash) et l'industrialisation des processus. Passionné par l'optimisation des performances, la haute disponibilité et la migration vers le cloud (OVH, Azure).",
+                profile_p3: "Capacité avérée à gérer des projets techniques complexes, à former des équipes et à assurer le support niveau 3. Excellentes compétences en communication et en gestion de projets IT.",
+                experience_title: "Expérience Professionnelle (9+ ans)",
+                skills_title: "Compétences Techniques",
+                skills_cat1: "Systèmes d'exploitation & Virtualisation",
+                skill_win: "Windows Server",
+                skills_cat2: "Stockage, Sauvegarde & Sécurité",
+                skills_cat3: "Réseaux & Infrastructure",
+                skills_cat4: "Supervision & Automatisation",
+                skills_cat5: "Cloud & Bases de données",
+                skills_cat6: "Applications & Outils",
+                edu_title: "Formations & Certifications",
+                lang_title: "Langues",
+                footer_title: "Intéressé par mon profil ?",
+                footer_description: "Consultant système expert en stockage et virtualisation avec <span class=\"highlight\">9+ ans d'expérience</span>, je suis ouvert à de nouvelles opportunités stimulantes. N'hésitez pas à me contacter pour discuter de vos projets d'infrastructure.",
+                footer_copyright: "&copy; 2026 Haithem Hamed - Consultant Système Expert. Tous droits réservés."
+            },
+            en: {
+                nav_home: "Home",
+                nav_profile: "Profile",
+                nav_experience: "Experience",
+                nav_skills: "Skills",
+                nav_education: "Education",
+                nav_languages: "Languages",
+                hero_title: "System Consultant – Storage & Virtualization Expert",
+                hero_experience: "9+ years of experience",
+                hero_description: "Senior System Engineer, VMware, Veeam, and storage infrastructure expert. Over <span class=\"highlight\">9 years of experience</span> in Linux/Windows environments, Active Directory, Hyper-V, and Proxmox, with a strong focus on security, resilience, and performance optimization.",
+                hero_cta_discover: "Explore my journey",
+                hero_cta_download: "Download CV (PDF)",
+                profile_title: "Professional Profile",
+                profile_subtitle: "Expertise & Added Value",
+                profile_p1: "System Engineer with <span class=\"highlight\">over 9 years of experience</span> specializing in virtualization, storage, and IT infrastructure security. Deep expertise in designing, deploying, and managing complex virtualized environments (VMware, Proxmox, Hyper-V).",
+                profile_p2: "Specialist in backup and disaster recovery solutions (VEEAM), with a strong focus on automation (Ansible, PowerShell, Bash) and process industrialization. Passionate about performance optimization, high availability, and cloud migration (OVH, Azure).",
+                profile_p3: "Proven ability to manage complex technical projects, train teams, and provide level 3 support. Excellent communication skills and IT project management.",
+                experience_title: "Professional Experience (9+ years)",
+                skills_title: "Technical Skills",
+                skills_cat1: "Operating Systems & Virtualization",
+                skill_win: "Windows Server",
+                skills_cat2: "Storage, Backup & Security",
+                skills_cat3: "Networks & Infrastructure",
+                skills_cat4: "Monitoring & Automation",
+                skills_cat5: "Cloud & Databases",
+                skills_cat6: "Applications & Tools",
+                edu_title: "Education & Certifications",
+                lang_title: "Languages",
+                footer_title: "Interested in my profile?",
+                footer_description: "System consultant expert in storage and virtualization with <span class=\"highlight\">9+ years of experience</span>, I am open to new and challenging opportunities. Feel free to contact me to discuss your infrastructure projects.",
+                footer_copyright: "&copy; 2026 Haithem Hamed - Senior System Consultant. All rights reserved."
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('cv_lang', lang);
+            
+            // Update active button state
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`lang-${lang}`).classList.add('active');
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Translate elements
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Update Download Links (Assuming you have an EN version or append a flag)
+            // For now, let's keep the user's specific requirement of having a translated document or selection.
+            const downloadLink = document.getElementById('download-cv');
+            const downloadLinkFooter = document.getElementById('download-cv-footer');
+            
+            if (lang === 'en') {
+                downloadLink.setAttribute('href', 'CV_Haithem_HAMED_EN.pdf');
+                downloadLink.setAttribute('download', 'CV_Haithem_HAMED_EN.pdf');
+                downloadLinkFooter.setAttribute('href', 'CV_Haithem_HAMED_EN.pdf');
+                downloadLinkFooter.setAttribute('download', 'CV_Haithem_HAMED_EN.pdf');
+            } else {
+                downloadLink.setAttribute('href', 'CV_Haithem_HAMED_FR.pdf');
+                downloadLink.setAttribute('download', 'CV_Haithem_HAMED_FR.pdf');
+                downloadLinkFooter.setAttribute('href', 'CV_Haithem_HAMED_FR.pdf');
+                downloadLinkFooter.setAttribute('download', 'CV_Haithem_HAMED_FR.pdf');
+            }
+        }
+
+        // Initialize language
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('cv_lang') || 'fr';
+            setLanguage(savedLang);
+        });
+
         // Gestion du menu mobile
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navMenu = document.getElementById('navMenu');
