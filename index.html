@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Haithem Hamed · Consultant Systèmes & Virtualisation | VMware, Veeam, Stockage & PRA</title>
+<meta name="description" content="Ingénieur système et virtualisation, 9 ans en production critique : VMware, Veeam, stockage et PRA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A1A31; --bg2:#10264A; --line:#23406E; --text:#DCE8F5; --muted:#8FA6C4;
+  --signal:#4FD1E8; --amber:#F2B544; --card:#0E2140;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#EEF3F9; --bg2:#E0E9F4; --line:#B9CBE2; --text:#0E2244; --muted:#4D6385;
+    --signal:#0A8FAB; --amber:#B97800; --card:#FFFFFF;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#EEF3F9; --bg2:#E0E9F4; --line:#B9CBE2; --text:#0E2244; --muted:#4D6385;
+  --signal:#0A8FAB; --amber:#B97800; --card:#FFFFFF;
+}
+:root[data-theme="dark"]{
+  --bg:#0A1A31; --bg2:#10264A; --line:#23406E; --text:#DCE8F5; --muted:#8FA6C4;
+  --signal:#4FD1E8; --amber:#F2B544; --card:#0E2140;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%}
+a{color:var(--signal)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+
+/* Loader */
+#loader{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;transition:opacity .7s ease,visibility .7s}
+#loader.done{opacity:0;visibility:hidden}
+.boot{font-family:var(--display);font-size:1.1rem;color:var(--muted);letter-spacing:.02em}
+.boot span{color:var(--signal)}
+.boot i{display:block;height:2px;margin-top:12px;background:var(--line);overflow:hidden}
+.boot i::after{content:"";display:block;height:100%;width:40%;background:var(--signal);animation:bootbar 1s ease-in-out infinite}
+@keyframes bootbar{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+
+/* Cursor */
+.cur,.cur-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:90;border-radius:50%;transform:translate(-50%,-50%)}
+.cur{width:8px;height:8px;background:var(--signal);box-shadow:0 0 12px 3px var(--signal)}
+.cur-ring{width:34px;height:34px;border:1.5px solid var(--signal);opacity:.55;transition:width .2s,height .2s,opacity .2s}
+.cur-ring.hover{width:54px;height:54px;opacity:.9}
+@media (hover:hover) and (pointer:fine){body.has-cursor,body.has-cursor a,body.has-cursor button{cursor:none}}
+@media (hover:none),(pointer:coarse){.cur,.cur-ring{display:none}}
+
+#net{position:fixed;inset:0;z-index:0;width:100%;height:100%}
+main,header,footer{position:relative;z-index:1}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* Nav */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;backdrop-filter:blur(10px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:var(--display);font-weight:700;font-size:1.15rem;text-decoration:none;color:var(--text)}
+.links{display:flex;gap:22px}
+.links a{color:var(--muted);text-decoration:none;font-size:.95rem}
+.links a:hover{color:var(--text)}
+@media (max-width:640px){.links{display:none}}
+
+/* Hero */
+.hero{min-height:calc(100vh - 60px);display:grid;grid-template-columns:1.25fr .75fr;align-items:center;gap:40px;padding:64px 0}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(3rem,8vw,6.2rem);line-height:.95;margin:0 0 20px;letter-spacing:-.01em}
+.shimmer{background:linear-gradient(100deg,var(--text) 0%,var(--text) 35%,var(--signal) 48%,var(--amber) 54%,var(--text) 66%,var(--text) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-130% 0}}
+.role{font-family:var(--display);font-size:clamp(1.2rem,2.4vw,1.6rem);color:var(--signal);margin:0 0 18px}
+.lede{max-width:34em;color:var(--muted);margin:0 0 32px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:12px 22px;border-radius:6px;font-weight:600;text-decoration:none;font-size:.98rem;border:1.5px solid var(--signal)}
+.btn.primary{background:var(--signal);color:var(--bg)}
+.btn.ghost{color:var(--text)}
+.btn:hover{filter:brightness(1.1)}
+
+.avatar-zone{position:relative;display:grid;place-items:center;aspect-ratio:1;max-width:340px;width:100%;justify-self:center}
+.ripple{position:absolute;inset:18%;border-radius:50%;border:1.5px solid var(--signal);opacity:0;animation:ripple 3.6s ease-out infinite}
+.ripple:nth-child(2){animation-delay:1.2s}
+.ripple:nth-child(3){animation-delay:2.4s}
+@keyframes ripple{0%{transform:scale(.8);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+.avatar{position:relative;width:64%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,var(--bg2),var(--card));border:2px solid var(--signal);font-family:var(--display);font-weight:700;font-size:clamp(3rem,7vw,4.6rem);color:var(--text);animation:pulse 2.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--signal) 45%,transparent)}50%{box-shadow:0 0 36px 6px color-mix(in srgb,var(--signal) 30%,transparent)}}
+@media (max-width:820px){.hero{grid-template-columns:1fr;min-height:auto;padding:48px 0}.avatar-zone{max-width:240px;order:-1}}
+
+/* Marquee */
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:18px 0;background:color-mix(in srgb,var(--bg2) 60%,transparent)}
+.track{display:flex;gap:56px;width:max-content;animation:marquee 32s linear infinite}
+.track span{font-family:var(--display);font-weight:700;font-size:1.35rem;color:var(--muted);white-space:nowrap}
+.track span::after{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-left:56px;vertical-align:middle}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* Sections */
+section{padding:96px 0}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(2rem,4.4vw,3rem);line-height:1.05;margin:0 0 14px}
+.intro{color:var(--muted);max-width:40em;margin:0 0 48px}
+
+/* Profil + carte 3D */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+.scene{perspective:1100px;display:grid;place-items:center;padding:20px}
+.card3d{width:min(360px,100%);padding:28px;border-radius:14px;background:linear-gradient(160deg,var(--bg2),var(--card));border:1px solid var(--line);transform-style:preserve-3d;animation:spin3d 14s ease-in-out infinite;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+@keyframes spin3d{0%{transform:rotateY(-18deg) rotateX(8deg) translateY(0)}25%{transform:rotateY(10deg) rotateX(-4deg) translateY(-12px)}50%{transform:rotateY(22deg) rotateX(6deg) translateY(0)}75%{transform:rotateY(-6deg) rotateX(-6deg) translateY(-10px)}100%{transform:rotateY(-18deg) rotateX(8deg) translateY(0)}}
+.card3d h3{font-family:var(--display);margin:0 0 4px;font-size:1.3rem}
+.card3d .sub{color:var(--muted);font-size:.9rem;margin:0 0 22px}
+.metric{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-top:1px solid var(--line);transform:translateZ(30px)}
+.metric b{font-family:var(--display);font-size:1.6rem;color:var(--signal)}
+.metric small{color:var(--muted);font-size:.9rem;text-align:right;max-width:60%}
+.status{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:.85rem;color:var(--muted)}
+.status::before{content:"";width:9px;height:9px;border-radius:50%;background:#3DDC84;box-shadow:0 0 8px #3DDC84}
+
+/* Compétences */
+.skills{display:grid;grid-template-columns:1fr 1fr;gap:28px 56px}
+@media (max-width:720px){.skills{grid-template-columns:1fr}}
+.skill .top{display:flex;justify-content:space-between;margin-bottom:8px}
+.skill .top b{font-weight:600}
+.skill .top em{font-style:normal;color:var(--muted);font-size:.88rem}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--signal),var(--amber));transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.skill p{margin:8px 0 0;font-size:.9rem;color:var(--muted)}
+
+/* Projets */
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+.proj{position:relative;padding:28px 26px 26px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:transform .3s,border-color .3s}
+.proj::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--signal),var(--amber),var(--signal));background-size:200% 100%;transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+.proj:hover{transform:translateY(-4px);border-color:var(--signal)}
+.proj:hover::before{transform:scaleX(1);animation:sweep 2s linear infinite}
+@keyframes sweep{to{background-position:-200% 0}}
+.proj.feat{grid-column:1/-1}
+.proj h3{font-family:var(--display);font-size:1.35rem;margin:0 0 6px}
+.proj .ctx{color:var(--amber);font-size:.9rem;margin:0 0 14px}
+.proj p{margin:0 0 14px;color:var(--muted)}
+.proj ul{margin:0;padding-left:18px;color:var(--muted);font-size:.95rem}
+.proj li{margin-bottom:6px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tags span{font-size:.8rem;padding:3px 10px;border-radius:20px;border:1px solid var(--line);color:var(--text)}
+
+/* Parcours */
+.timeline{border-left:2px solid var(--line);margin-left:6px}
+.job{position:relative;padding:0 0 40px 30px}
+.job::before{content:"";position:absolute;left:-8px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--signal)}
+.job .when{color:var(--muted);font-size:.9rem}
+.job h3{font-family:var(--display);font-size:1.3rem;margin:2px 0}
+.job .org{color:var(--signal);margin:0 0 10px}
+.job ul{margin:0;padding-left:18px;color:var(--muted)}
+.job li{margin-bottom:4px}
+
+.edu{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.edu div{padding:18px 20px;border:1px solid var(--line);border-radius:8px;background:color-mix(in srgb,var(--card) 70%,transparent)}
+.edu b{display:block;font-weight:600}
+.edu span{color:var(--muted);font-size:.9rem}
+
+/* Contact */
+.contact{text-align:center}
+.contact-orb{position:relative;width:180px;height:180px;margin:0 auto 36px;display:grid;place-items:center}
+.contact-orb .ripple{inset:22%}
+.contact-orb .core{width:74px;height:74px;border-radius:50%;background:var(--signal);display:grid;place-items:center;color:var(--bg);font-family:var(--display);font-weight:700;font-size:1.6rem;box-shadow:0 0 30px color-mix(in srgb,var(--signal) 60%,transparent)}
+.contact .intro{margin:0 auto 32px}
+.contact .cta{justify-content:center}
+footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;text-align:center}
+
+/* Reveals */
+.reveal{opacity:0;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.up{transform:translateY(40px)}
+.reveal.left{transform:translateX(-50px)}
+.reveal.right{transform:translateX(50px)}
+.reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+  .track{animation:none;flex-wrap:wrap}
+}
+.track .co{display:inline-flex;align-items:center;gap:14px}
+.track .co img{height:34px;width:auto;border-radius:6px;background:#fff;padding:4px}
+</style>
+<style>
+html[data-lang="fr"] [data-l="en"],html[data-lang="en"] [data-l="fr"]{display:none!important}
+.navr{display:flex;align-items:center;gap:22px}
+.lang{display:flex;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--muted);font:600 .82rem var(--body);padding:5px 11px}
+.lang button[aria-pressed="true"]{background:var(--signal);color:var(--bg)}
+.logo .p{color:var(--signal);margin-right:6px}
+.badge{display:inline-block;margin:0 0 20px;padding:5px 14px;border-radius:20px;border:1px solid var(--amber);color:var(--amber);font-size:.9rem;font-weight:600}
+.job .tags{margin-top:12px}
+.edu p{margin:8px 0 0;font-size:.9rem;color:var(--muted)}
+.langs{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-top:18px}
+.langs div{padding:16px 18px;border:1px solid var(--line);border-radius:8px}
+.langs b{display:block;font-family:var(--display);font-size:1.15rem}
+.langs span{color:var(--muted);font-size:.9rem}
+.clist{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:22px}
+.clist a{color:var(--text);text-decoration:none;padding:10px 18px;border:1px solid var(--line);border-radius:24px;font-size:.95rem}
+.clist a:hover{border-color:var(--signal)}
+.skill ul{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+.skill li{font-size:.85rem;padding:2px 10px;border-radius:14px;border:1px solid var(--line);color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="loader" aria-hidden="true"><div class="boot"><span>&gt;_</span> Haithem Hamed<i></i></div></div>
+<div class="cur" aria-hidden="true"></div><div class="cur-ring" aria-hidden="true"></div>
+<canvas id="net" aria-hidden="true"></canvas>
+
+<header>
+  <nav class="wrap" aria-label="Navigation">
+    <a class="logo" href="#top"><span class="p">&gt;_</span>Haithem Hamed</a>
+    <div class="navr">
+      <div class="links">
+        <a href="#profil"><span data-l="fr">Profil</span><span data-l="en">Profile</span></a>
+        <a href="#projets"><span data-l="fr">Projets</span><span data-l="en">Projects</span></a>
+        <a href="#experience"><span data-l="fr">Expérience</span><span data-l="en">Experience</span></a>
+        <a href="#competences"><span data-l="fr">Compétences</span><span data-l="en">Skills</span></a>
+        <a href="#formations"><span data-l="fr">Formations</span><span data-l="en">Education</span></a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="lang" role="group" aria-label="Langue / Language">
+        <button type="button" data-set="fr" aria-pressed="true">FR</button>
+        <button type="button" data-set="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <p class="badge reveal left"><span data-l="fr">9+ ans d'expérience</span><span data-l="en">9+ years of experience</span></p>
+      <h1 class="shimmer reveal left">Haithem<br>Hamed</h1>
+      <p class="role reveal left"><span data-l="fr">Consultant Systèmes & Virtualisation · VMware, Veeam, Stockage & PRA</span><span data-l="en">Systems & Virtualization Consultant · VMware, Veeam, Storage & DR</span></p>
+      <p class="lede reveal up">
+        <span data-l="fr">Ingénieur système et virtualisation, 9 ans en production critique. Une constante dans le parcours : faire migrer des infrastructures sans arrêter le service, puis industrialiser ce qui a été migré : Ansible, supervision, et des plans de reprise réellement éprouvés.</span>
+        <span data-l="en">Systems and virtualization engineer with 9 years in business-critical production. One constant: migrating infrastructure without stopping the service, then industrializing what was migrated: Ansible, monitoring, and disaster recovery plans that have been tested for real.</span>
+      </p>
+      <div class="cta reveal up">
+        <a class="btn primary" href="#experience"><span data-l="fr">Découvrir mon parcours</span><span data-l="en">See my background</span></a>
+        <a class="btn ghost" href="https://haithem-hamed.github.io/PORTFOLIO/CV_Haithem_HAMED_FR.pdf" target="_blank" rel="noopener"><span data-l="fr">Télécharger mon CV (PDF)</span><span data-l="en">Download my resume (PDF, FR)</span></a>
+      </div>
+    </div>
+    <div class="avatar-zone reveal right" aria-hidden="true">
+      <span class="ripple"></span><span class="ripple"></span><span class="ripple"></span>
+      <div class="avatar">HH</div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-label="Entreprises">
+    <div class="track"><span class="co"><img src="logos/proxiweb.png" alt="" loading="lazy" onerror="this.remove()">PROXIWEB</span><span class="co"><img src="logos/new-engineering-it.png" alt="" loading="lazy" onerror="this.remove()">NEW ENGINEERING IT</span><span class="co"><img src="logos/zengroup.png" alt="" loading="lazy" onerror="this.remove()">ZENGROUP</span><span class="co"><img src="logos/maghrebia.png" alt="" loading="lazy" onerror="this.remove()">Assurance Maghrebia</span><span class="co"><img src="logos/open.png" alt="" loading="lazy" onerror="this.remove()">OPEN</span><span class="co"><img src="logos/ofb.png" alt="" loading="lazy" onerror="this.remove()">Office Français de la Biodiversité</span><span class="co" aria-hidden="true"><img src="logos/proxiweb.png" alt="" loading="lazy" onerror="this.remove()">PROXIWEB</span><span class="co" aria-hidden="true"><img src="logos/new-engineering-it.png" alt="" loading="lazy" onerror="this.remove()">NEW ENGINEERING IT</span><span class="co" aria-hidden="true"><img src="logos/zengroup.png" alt="" loading="lazy" onerror="this.remove()">ZENGROUP</span><span class="co" aria-hidden="true"><img src="logos/maghrebia.png" alt="" loading="lazy" onerror="this.remove()">Assurance Maghrebia</span><span class="co" aria-hidden="true"><img src="logos/open.png" alt="" loading="lazy" onerror="this.remove()">OPEN</span><span class="co" aria-hidden="true"><img src="logos/ofb.png" alt="" loading="lazy" onerror="this.remove()">Office Français de la Biodiversité</span></div>
+  </div>
+
+  <section id="profil">
+    <div class="wrap split">
+      <div class="reveal left">
+        <h2><span data-l="fr">Expertise & valeur ajoutée</span><span data-l="en">Expertise & value</span></h2>
+        <div data-l="fr">
+          <p>Ingénieur système et virtualisation, 9 ans en production critique, spécialisé VMware, sauvegarde et continuité d'activité. Une constante dans le parcours : faire migrer des infrastructures sans arrêter le service. 500 machines virtuelles vers vSphere 8.0 pour 15 minutes de coupure, 30 sites basculés du VPN SSL vers MPLS sans interruption, annuaires et bases de données modernisés, applications métiers portées vers le cloud.</p>
+          <p>Puis industrialiser ce qui a été migré : automatisation Ansible (50 playbooks couvrant 300 serveurs, versionnés sur GitLab), supervision, et des plans de reprise réellement éprouvés, dont un validé par une coupure électrique sur plus de 100 applications.</p>
+          <p style="color:var(--muted)">Expérience du privé comme du public, dont un an à la tête d'un service informatique de 500 utilisateurs et, depuis 2024, l'intervention en prestation chez un client du secteur public. Également à l'origine d'une plateforme interne de 9 modules conteneurisés, spécifiée et mise en production en autonomie.</p>
+        </div>
+        <div data-l="en">
+          <p>Systems and virtualization engineer with 9 years in business-critical production, specialized in VMware, backup and business continuity. One constant: migrating infrastructure without stopping the service. 500 virtual machines moved to vSphere 8.0 with 15 minutes of downtime, 30 sites switched from SSL VPN to MPLS with no interruption, directories and databases modernized, business applications moved to the cloud.</p>
+          <p>Then industrializing what was migrated: Ansible automation (50 playbooks covering 300 servers, versioned in GitLab), monitoring, and disaster recovery plans tested for real, including one validated by a site power outage across more than 100 applications.</p>
+          <p style="color:var(--muted)">Experience in both private and public sectors, including a year heading an IT department of 500 users and, since 2024, consulting for a public-sector client. Also the creator of an internal platform of 9 containerized modules, specified and put into production independently.</p>
+        </div>
+      </div>
+      <div class="scene reveal right">
+        <div class="card3d">
+          <h3><span data-l="fr">Consolidation vSphere 8.0</span><span data-l="en">vSphere 8.0 consolidation</span></h3>
+          <p class="sub"><span data-l="fr">Mission OFB, depuis mars 2024</span><span data-l="en">OFB engagement, since March 2024</span></p>
+          <div class="metric"><b>500</b><small><span data-l="fr">VM basculées</span><span data-l="en">VMs migrated</span></small></div>
+          <div class="metric"><b>15 min</b><small><span data-l="fr">d'interruption de service</span><span data-l="en">of downtime</span></small></div>
+          <div class="metric"><b>4 → 1</b><small><span data-l="fr">vCenter consolidés sur HPE SimpliVity</span><span data-l="en">vCenters consolidated on HPE SimpliVity</span></small></div>
+          <div class="metric"><b>100+</b><small><span data-l="fr">applications couvertes par le PRA</span><span data-l="en">applications covered by the DR plan</span></small></div>
+          <div class="status"><span data-l="fr">PRA éprouvé en conditions réelles</span><span data-l="en">DR plan tested under real conditions</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projets">
+    <div class="wrap">
+      <h2 class="reveal up"><span data-l="fr">Réalisations clés</span><span data-l="en">Key achievements</span></h2>
+      <p class="intro reveal up"><span data-l="fr">Les projets qui résument le mieux ma façon de travailler.</span><span data-l="en">The projects that best sum up how I work.</span></p>
+      <div class="projects">
+        <article class="proj feat reveal up">
+          <h3><span data-l="fr">Portail d'exploitation et de supervision</span><span data-l="en">Operations and monitoring portal</span></h3>
+          <p class="ctx"><span data-l="fr">Projet phare · initiative personnelle adoptée par l'OFB comme application interne</span><span data-l="en">Flagship project · personal initiative adopted by OFB as an internal application</span></p>
+          <p><span data-l="fr">9 modules conteneurisés derrière un SSO Active Directory, spécifiés et mis en production en autonomie, utilisés par toute l'équipe infrastructure : 20 agents pilotant 600 serveurs.</span><span data-l="en">9 containerized modules behind Active Directory SSO, specified and put into production independently, used by the whole infrastructure team: 20 engineers running 600 servers.</span></p>
+          <div class="tags"><span>Docker</span><span>nginx</span><span>PostgreSQL</span><span>LDAPS</span><span>SSO</span></div>
+        </article>
+        <article class="proj reveal left">
+          <h3><span data-l="fr">Consolidation de 4 vCenter</span><span data-l="en">Consolidating 4 vCenters</span></h3>
+          <p class="ctx">OFB · <span data-l="fr">12 mois</span><span data-l="en">12 months</span></p>
+          <p><span data-l="fr">20 hôtes ESXi et 500 VM réunis sur une infrastructure unique HPE SimpliVity sous vSphere 8.0 : 15 hôtes cibles, dont 10 en production et 5 dédiés au PRA. Bascule de vSphere 6.7 vers 8.0 pour 15 minutes d'interruption.</span><span data-l="en">20 ESXi hosts and 500 VMs merged into a single HPE SimpliVity infrastructure on vSphere 8.0: 15 target hosts, 10 in production and 5 dedicated to DR. Upgrade from vSphere 6.7 to 8.0 with 15 minutes of downtime.</span></p>
+          <div class="tags"><span>vSphere 8</span><span>HPE SimpliVity</span></div>
+        </article>
+        <article class="proj reveal up">
+          <h3><span data-l="fr">Plan de reprise d'activité</span><span data-l="en">Disaster recovery plan</span></h3>
+          <p class="ctx">OFB · 100+ applications</p>
+          <p><span data-l="fr">Conçu pour plus de 100 applications et éprouvé en conditions réelles lors d'une coupure d'alimentation du site.</span><span data-l="en">Designed for more than 100 applications and proven under real conditions during a site power outage.</span></p>
+          <div class="tags"><span>PRA / RTO-RPO</span><span>Veeam</span></div>
+        </article>
+        <article class="proj reveal right">
+          <h3><span data-l="fr">30 sites passés en full MPLS</span><span data-l="en">30 sites moved to full MPLS</span></h3>
+          <p class="ctx">ZENGROUP</p>
+          <p><span data-l="fr">Bascule de l'ensemble des liaisons du VPN SSL vers un réseau MPLS, sans interruption de service.</span><span data-l="en">All links switched from SSL VPN to an MPLS network with no service interruption.</span></p>
+          <div class="tags"><span>MPLS</span><span>FortiGate</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <h2 class="reveal up"><span data-l="fr">Expérience professionnelle</span><span data-l="en">Professional experience</span></h2>
+      <p class="intro reveal up"><span data-l="fr">9+ ans, du plus récent au plus ancien.</span><span data-l="en">9+ years, most recent first.</span></p>
+      <div class="timeline">
+        <div class="job reveal left">
+          <span class="when"><span data-l="fr">Mars 2024 – aujourd'hui</span><span data-l="en">March 2024 – present</span></span>
+          <h3>OPEN</h3>
+          <p class="org"><span data-l="fr">Consultant Système Expert · mission Office Français de la Biodiversité (OFB)</span><span data-l="en">Senior Systems Consultant · Office Français de la Biodiversité (OFB) engagement</span></p>
+          <ul data-l="fr">
+            <li>Pilotage sur 12 mois de la consolidation de 4 vCenter (20 hôtes ESXi, 500 VM) en une infrastructure unique HPE SimpliVity sous vSphere 8.0.</li>
+            <li>Bascule des 500 VM de vSphere 6.7 vers vSphere 8.0 pour 15 minutes d'interruption de service.</li>
+            <li>Conception du plan de reprise d'activité couvrant plus de 100 applications, éprouvé lors d'une coupure d'alimentation du site.</li>
+            <li>Migration de 100 To de serveurs de fichiers vers Cohesity.</li>
+            <li>Migration de 30 serveurs et des applications ASTRE, CADIC, OSCEAN et PARAPHEUR de VMware on-premise vers OVHcloud.</li>
+            <li>Industrialisation via Ansible : 50 playbooks couvrant 300 serveurs, versionnés sur GitLab.</li>
+            <li>Exploitation de 200 jobs de sauvegarde Veeam, 99 % de taux de réussite, et supervision de l'infrastructure.</li>
+            <li>Référent technique de 4 applications métiers pour plus de 300 agents ; structuration des processus d'incidents, changements et releases.</li>
+          </ul>
+          <ul data-l="en">
+            <li>Led a 12-month consolidation of 4 vCenters (20 ESXi hosts, 500 VMs) into a single HPE SimpliVity infrastructure on vSphere 8.0.</li>
+            <li>Migrated 500 VMs from vSphere 6.7 to 8.0 with 15 minutes of downtime.</li>
+            <li>Designed the disaster recovery plan for 100+ applications, proven during a site power outage.</li>
+            <li>Migrated 100 TB of file servers to Cohesity.</li>
+            <li>Moved 30 servers and the ASTRE, CADIC, OSCEAN and PARAPHEUR applications from on-premise VMware to OVHcloud.</li>
+            <li>Industrialized operations with Ansible: 50 playbooks covering 300 servers, versioned in GitLab.</li>
+            <li>Ran 200 Veeam backup jobs at a 99% success rate, plus infrastructure monitoring.</li>
+            <li>Technical lead for 4 business applications serving 300+ staff; structured incident, change and release processes.</li>
+          </ul>
+          <div class="tags"><span>VMware vSphere 8</span><span>HPE SimpliVity</span><span>Veeam</span><span>Cohesity</span><span>PRA / RTO-RPO</span><span>Ansible</span><span>GitLab</span><span>OVHcloud</span><span>Docker</span><span>SolarWinds</span><span>ServiceNow</span><span>Active Directory</span></div>
+        </div>
+        <div class="job reveal left">
+          <span class="when"><span data-l="fr">Janv. 2023 – déc. 2023</span><span data-l="en">Jan 2023 – Dec 2023</span></span>
+          <h3>Assurance Maghrebia</h3>
+          <p class="org"><span data-l="fr">Chef Service Informatique</span><span data-l="en">Head of IT</span></p>
+          <ul data-l="fr">
+            <li>Administration de l'infrastructure VMware (HA, FT, DRS, vMotion, cluster).</li>
+            <li>Développement de playbooks Ansible et sauvegardes Veeam.</li>
+            <li>Gestion Active Directory, scripts PowerShell, déploiement Microsoft LAPS.</li>
+            <li>Surveillance sécurité, analyse des alertes SOC, antivirus et IPS.</li>
+            <li>Migration AD 2008 vers 2019 et SQL Server 2014 vers 2022.</li>
+          </ul>
+          <ul data-l="en">
+            <li>Administered the VMware infrastructure (HA, FT, DRS, vMotion, cluster).</li>
+            <li>Built Ansible playbooks and Veeam backups.</li>
+            <li>Managed Active Directory, PowerShell scripts, Microsoft LAPS rollout.</li>
+            <li>Security monitoring: SOC, antivirus and IPS alert analysis.</li>
+            <li>Migrated AD 2008 to 2019 and SQL Server 2014 to 2022.</li>
+          </ul>
+          <div class="tags"><span>Active Directory</span><span>Ansible</span><span>Veeam</span><span>VMware vSphere</span><span>FortiGate</span><span>Debian</span><span>Symantec Endpoint Protection</span><span>Zabbix</span></div>
+        </div>
+        <div class="job reveal left">
+          <span class="when"><span data-l="fr">Oct. 2021 – déc. 2022</span><span data-l="en">Oct 2021 – Dec 2022</span></span>
+          <h3>ZENGROUP</h3>
+          <p class="org"><span data-l="fr">Ingénieur Système et Réseaux</span><span data-l="en">Systems and Network Engineer</span></p>
+          <ul data-l="fr">
+            <li>Administration Proxmox et maintien des systèmes Linux.</li>
+            <li>Supervision Centreon et intégration Veeam Backup.</li>
+            <li>Gestion firewall FortiGate, VPN IPsec/SSL, VLAN, haute disponibilité.</li>
+            <li>Gestion du stockage NAS/SAN et des tickets iTop.</li>
+            <li>Migration vers OVHcloud et architecture full MPLS.</li>
+          </ul>
+          <ul data-l="en">
+            <li>Proxmox administration and Linux systems maintenance.</li>
+            <li>Centreon monitoring and Veeam Backup integration.</li>
+            <li>FortiGate firewall, IPsec/SSL VPN, VLANs, high availability.</li>
+            <li>NAS/SAN storage and iTop ticket management.</li>
+            <li>Migration to OVHcloud and full MPLS architecture.</li>
+          </ul>
+          <div class="tags"><span>Veeam</span><span>FortiGate</span><span>Linux</span><span>Centreon</span><span>NAS/SAN</span><span>Proxmox</span></div>
+        </div>
+        <div class="job reveal left">
+          <span class="when"><span data-l="fr">Mars 2020 – sept. 2021</span><span data-l="en">Mar 2020 – Sep 2021</span></span>
+          <h3>NEW ENGINEERING IT</h3>
+          <p class="org"><span data-l="fr">Ingénieur Système Linux</span><span data-l="en">Linux Systems Engineer</span></p>
+          <ul data-l="fr">
+            <li>Administration des utilisateurs, permissions et systèmes de fichiers.</li>
+            <li>Politiques de sécurité, sauvegarde et reprise après sinistre.</li>
+            <li>Supervision Grafana, Zabbix, Centreon, Nagios.</li>
+            <li>Cluster Kubernetes et services web (nginx, PostgreSQL).</li>
+          </ul>
+          <ul data-l="en">
+            <li>Users, permissions and file system administration.</li>
+            <li>Security, backup and disaster recovery policies.</li>
+            <li>Grafana, Zabbix, Centreon, Nagios monitoring.</li>
+            <li>Kubernetes cluster and web services (nginx, PostgreSQL).</li>
+          </ul>
+          <div class="tags"><span>Kubernetes</span><span>Debian</span><span>Zabbix</span><span>Grafana</span><span>Centreon</span><span>Nagios</span><span>nginx</span><span>Apache</span><span>PostgreSQL</span></div>
+        </div>
+        <div class="job reveal left">
+          <span class="when"><span data-l="fr">Janv. 2018 – févr. 2020</span><span data-l="en">Jan 2018 – Feb 2020</span></span>
+          <h3>PROXIWEB</h3>
+          <p class="org"><span data-l="fr">Ingénieur Système</span><span data-l="en">Systems Engineer</span></p>
+          <ul data-l="fr">
+            <li>Virtualisation de VM sous Proxmox (Linux/Windows).</li>
+            <li>Veeam Backup, iSCSI et contrôleurs de domaine.</li>
+            <li>Automatisation AD et GPO.</li>
+            <li>Supervision Centreon, VoIP et tickets GLPI.</li>
+            <li>Projet Matomo Web Analytics.</li>
+          </ul>
+          <ul data-l="en">
+            <li>VM virtualization on Proxmox (Linux/Windows).</li>
+            <li>Veeam Backup, iSCSI and domain controllers.</li>
+            <li>AD and GPO automation.</li>
+            <li>Centreon monitoring, VoIP and GLPI tickets.</li>
+            <li>Matomo Web Analytics project.</li>
+          </ul>
+          <div class="tags"><span>Veeam</span><span>Active Directory</span><span>Proxmox</span><span>Centreon</span><span>iSCSI</span><span>GLPI</span><span>Matomo</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="competences">
+    <div class="wrap">
+      <h2 class="reveal up"><span data-l="fr">Compétences techniques</span><span data-l="en">Technical skills</span></h2>
+      <p class="intro reveal up"><span data-l="fr">Le cœur du métier en premier, l'outillage autour ensuite.</span><span data-l="en">Core expertise first, surrounding tooling after.</span></p>
+      <div class="skills">
+        <div class="skill reveal left"><div class="top"><b><span data-l="fr">Systèmes & virtualisation</span><span data-l="en">Systems & virtualization</span></b></div><div class="bar"><i data-w="95"></i></div><ul><li>VMware vSphere / ESXi</li><li>Windows Server</li><li>Linux (Red Hat, Debian, Ubuntu)</li><li>Proxmox / Hyper-V</li><li>Microsoft Azure</li></ul></div>
+        <div class="skill reveal right"><div class="top"><b><span data-l="fr">Stockage, sauvegarde & sécurité</span><span data-l="en">Storage, backup & security</span></b></div><div class="bar"><i data-w="92"></i></div><ul><li>Veeam Backup & Replication</li><li>HPE SimpliVity / Cohesity</li><li>HP 3PAR / StorageWorks</li><li>NAS & SAN</li><li>FortiGate</li></ul></div>
+        <div class="skill reveal left"><div class="top"><b><span data-l="fr">Réseaux & annuaire</span><span data-l="en">Networking & directory</span></b></div><div class="bar"><i data-w="88"></i></div><ul><li>Active Directory & GPO</li><li>LDAP / DNS / DHCP</li><li><span data-l="fr">Haute disponibilité</span><span data-l="en">High availability</span></li></ul></div>
+        <div class="skill reveal right"><div class="top"><b><span data-l="fr">Supervision & automatisation</span><span data-l="en">Monitoring & automation</span></b></div><div class="bar"><i data-w="85"></i></div><ul><li>Ansible</li><li>PowerShell / Bash</li><li>Centreon</li><li>Zabbix</li><li>Grafana</li></ul></div>
+        <div class="skill reveal left"><div class="top"><b><span data-l="fr">Cloud & bases de données</span><span data-l="en">Cloud & databases</span></b></div><div class="bar"><i data-w="78"></i></div><ul><li>OVHcloud</li><li>Microsoft Azure</li><li>PostgreSQL / SQL Server</li><li>Kubernetes / Docker</li></ul></div>
+        <div class="skill reveal right"><div class="top"><b><span data-l="fr">Applications & outils IT</span><span data-l="en">Applications & IT tools</span></b></div><div class="bar"><i data-w="75"></i></div><ul><li>nginx / Apache</li><li>GLPI / iTop</li><li>Matomo</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="formations">
+    <div class="wrap">
+      <h2 class="reveal up"><span data-l="fr">Formations & certifications</span><span data-l="en">Education & certifications</span></h2>
+      <div class="edu" style="margin-top:32px">
+        <div class="reveal up"><b>Microsoft Azure Fundamentals (AZ-900)</b><span>Microsoft · 05/2024</span><p><span data-l="fr">Cloud computing et services Azure (IaaS, PaaS, SaaS).</span><span data-l="en">Cloud computing and Azure services (IaaS, PaaS, SaaS).</span></p></div>
+        <div class="reveal up"><b>LPIC-1</b><span>Linux Professional Institute · 02/2015</span><p><span data-l="fr">Administration système Linux, ligne de commande, systèmes de fichiers, gestion des paquets.</span><span data-l="en">Linux system administration, command line, file systems, package management.</span></p></div>
+        <div class="reveal up"><b>CCNA 1-2-3</b><span>Cisco Networking Academy · 07/2014</span><p><span data-l="fr">Réseaux, routage, commutation et équipements Cisco.</span><span data-l="en">Networking, routing, switching and Cisco equipment.</span></p></div>
+        <div class="reveal up"><b><span data-l="fr">Diplôme National de Mastère Professionnel en Développement des Systèmes Informatiques et Réseaux</span><span data-l="en">Professional Master's in Computer Systems and Networks Development</span></b><span>ISETSF - Institut Supérieur des Études Technologiques de Sfax · 2016–2018</span><p><span data-l="fr">Architecture système, réseaux avancés, virtualisation et sécurité informatique.</span><span data-l="en">Systems architecture, advanced networking, virtualization and IT security.</span></p></div>
+        <div class="reveal up"><b><span data-l="fr">Diplôme National de Licence Appliquée en Technologies de l'Informatique</span><span data-l="en">Applied Bachelor's in Computer Technology</span></b><span>ISETSF - Institut Supérieur des Études Technologiques de Sfax · 2013–2016</span><p><span data-l="fr">Systèmes d'exploitation, bases de données et développement logiciel.</span><span data-l="en">Operating systems, databases and software development.</span></p></div>
+        <div class="reveal up"><b><span data-l="fr">Baccalauréat Sciences de l'informatique</span><span data-l="en">Baccalaureate in Computer Science</span></b><span>Lycée Sidi Makhlouf, Médenine · 2013</span><p><span data-l="fr">Mention, initiation à la programmation et aux systèmes.</span><span data-l="en">With honors, introduction to programming and systems.</span></p></div>
+      </div>
+
+      <h3 class="reveal up" style="font-family:var(--display);font-size:1.6rem;margin:56px 0 0"><span data-l="fr">Langues</span><span data-l="en">Languages</span></h3>
+      <div class="langs">
+        <div class="reveal up"><b><span data-l="fr">Arabe</span><span data-l="en">Arabic</span></b><span><span data-l="fr">Langue maternelle</span><span data-l="en">Native</span></span></div>
+        <div class="reveal up"><b><span data-l="fr">Français</span><span data-l="en">French</span></b><span><span data-l="fr">Courant (C1)</span><span data-l="en">Fluent (C1)</span></span></div>
+        <div class="reveal up"><b><span data-l="fr">Anglais</span><span data-l="en">English</span></b><span><span data-l="fr">Intermédiaire (B1)</span><span data-l="en">Intermediate (B1)</span></span></div>
+        <div class="reveal up"><b><span data-l="fr">Allemand</span><span data-l="en">German</span></b><span><span data-l="fr">Débutant (A1)</span><span data-l="en">Beginner (A1)</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="contact-orb reveal up" aria-hidden="true">
+        <span class="ripple"></span><span class="ripple"></span><span class="ripple"></span>
+        <div class="core">HH</div>
+      </div>
+      <h2 class="reveal up"><span data-l="fr">Intéressé par mon profil ?</span><span data-l="en">Interested in my profile?</span></h2>
+      <p class="intro reveal up"><span data-l="fr">Ouvert à de nouvelles missions : n'hésitez pas à me contacter pour discuter de vos projets d'infrastructure.</span><span data-l="en">Open to new opportunities: feel free to reach out to discuss your infrastructure projects.</span></p>
+      <div class="clist reveal up">
+        <a href="mailto:hamed.haythem@gmail.com">hamed.haythem@gmail.com</a>
+        <a href="tel:+33744153972">+33 7 44 15 39 72</a>
+        <a href="https://linkedin.com/in/haithem-hamed" target="_blank" rel="noopener">linkedin.com/in/haithem-hamed</a>
+      </div>
+      <div class="cta reveal up">
+        <a class="btn primary" href="https://haithem-hamed.github.io/PORTFOLIO/CV_Haithem_HAMED_FR.pdf" target="_blank" rel="noopener"><span data-l="fr">Télécharger mon CV (PDF)</span><span data-l="en">Download my resume (PDF, FR)</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Haithem Hamed · <span data-l="fr">Consultant Systèmes & Virtualisation</span><span data-l="en">Systems & Virtualization Consultant</span></div></footer>
+<script>
+(function(){
+  
+  // Langue
+  const root=document.documentElement;
+  function setLang(l){root.dataset.lang=l;root.lang=l;document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.set===l));try{localStorage.setItem('lang',l)}catch(e){}}
+  let saved=null;try{saved=localStorage.getItem('lang')}catch(e){}
+  setLang(saved||'fr');
+  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.set)));
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Loader
+  window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('done'), 600));
+  setTimeout(() => document.getElementById('loader').classList.add('done'), 3500);
+
+  // Curseur
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (fine && !reduce) {
+    document.body.classList.add('has-cursor');
+    const dot = document.querySelector('.cur'), ring = document.querySelector('.cur-ring');
+    let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+    addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`; });
+    (function loop(){ rx += (mx-rx)*.15; ry += (my-ry)*.15; ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button,.proj').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+  }
+
+  // Réseau de particules
+  const c = document.getElementById('net'), ctx = c.getContext('2d');
+  let W, H, pts = [], mouse = {x:-999, y:-999};
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  function hexA(hex, a){ const h = hex.replace('#',''); const n = parseInt(h,16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
+  function size(){
+    const dpr = Math.min(devicePixelRatio||1, 2);
+    W = innerWidth; H = innerHeight; c.width = W*dpr; c.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count = Math.min(90, Math.floor(W*H/16000));
+    pts = Array.from({length:count}, () => ({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35}));
+  }
+  addEventListener('resize', size); size();
+  addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  function draw(){
+    const col = css('--signal') || '#4FD1E8';
+    ctx.clearRect(0,0,W,H);
+    for (const p of pts){
+      if (!reduce){ p.x += p.vx; p.y += p.vy; }
+      if (p.x<0||p.x>W) p.vx*=-1; if (p.y<0||p.y>H) p.vy*=-1;
+      ctx.fillStyle = hexA(col,.55); ctx.beginPath(); ctx.arc(p.x,p.y,1.6,0,Math.PI*2); ctx.fill();
+    }
+    for (let i=0;i<pts.length;i++){
+      for (let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.hypot(dx,dy);
+        if (d<130){ ctx.strokeStyle = hexA(col, (1-d/130)*.22); ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.stroke(); }
+      }
+      const md = Math.hypot(pts[i].x-mouse.x, pts[i].y-mouse.y);
+      if (md<170){ ctx.strokeStyle = hexA(col,(1-md/170)*.45); ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(mouse.x,mouse.y); ctx.stroke(); }
+    }
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  draw();
+
+  // Révélation au défilement + barres de compétences
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('in');
+      en.target.querySelectorAll('.bar i').forEach(b => b.style.width = b.dataset.w + '%');
+      io.unobserve(en.target);
+    });
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+</script>
+</body></html>
